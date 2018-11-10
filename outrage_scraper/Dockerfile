@@ -9,4 +9,4 @@ RUN pip install -r requirements.txt
 ENV PYTHONPATH=$PYTHONPATH:outrage_scraper/
 
 # run the application
-CMD ["python", "./app.py"]
+CMD ["python", "app.py"]
