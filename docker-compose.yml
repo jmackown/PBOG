@@ -1,39 +1,39 @@
 version: '3'
 
 services:
-  outrage_db:
-    image: 'postgres:9.6.3'
-    environment:
-      - POSTGRES_USER=outrage
-    ports:
-      - '55:5432'
-    volumes:
-      - ./outrage_db/db_setup:/docker-entrypoint-initdb.d
-    networks:
-      - PBOG   
+#  outrage_db:
+#    image: 'postgres:9.6.3'
+#    environment:
+#      - POSTGRES_USER=outrage
+#    ports:
+#      - '55:5432'
+#    volumes:
+#      - ./outrage_db/db_setup:/docker-entrypoint-initdb.d
+#    networks:
+#      - PBOG
 
 
-  outrage_scraper:
-      build:
-        context: ./outrage_scraper
-        dockerfile: Dockerfile
-      ports:
-        - '66:66'
-      volumes:
-        - ./outrage_scraper:/app/outrage_scraper
-      networks:
-        - PBOG
-
-  outrage_analysis:
-      build:
-        context: ./outrage_analysis
-        dockerfile: Dockerfile
-      ports:
-        - '77:77'
-      volumes:
-        - ./outrage_analysis:/app/outrage_analysis
-      networks:
-        - PBOG        
+#  outrage_scraper:
+#      build:
+#        context: ./outrage_scraper
+#        dockerfile: Dockerfile
+#      ports:
+#        - '66:66'
+#      volumes:
+#        - ./outrage_scraper:/app/outrage_scraper
+#      networks:
+#        - PBOG
+#
+#  outrage_analysis:
+#      build:
+#        context: ./outrage_analysis
+#        dockerfile: Dockerfile
+#      ports:
+#        - '77:77'
+#      volumes:
+#        - ./outrage_analysis:/app/outrage_analysis
+#      networks:
+#        - PBOG
 
   outrage_display:
       build:
