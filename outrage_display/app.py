@@ -1,6 +1,7 @@
 from flask import Blueprint, Flask
 from database import db
 from create_db import ragnarok_bp
+from blueprints import main_bp
 
 def create_app():
 
@@ -8,11 +9,9 @@ def create_app():
 
     app.config.from_object('default_settings')
 
-    @app.route('/')
-    def hello_world():
-        return 'Flask Dockerized'
 
     app.register_blueprint(ragnarok_bp)
+    app.register_blueprint(main_bp)
 
     db.init_app(app)
 
