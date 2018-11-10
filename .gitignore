@@ -2,3 +2,6 @@
 venv/
 
 \.idea/
+feature/scraper
+
+pgob_env/
