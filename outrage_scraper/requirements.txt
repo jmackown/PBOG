@@ -10,10 +10,11 @@ idna==2.7
 itsdangerous==1.1.0
 Jinja2==2.10
 MarkupSafe==1.1.0
-psycopg2==2.7.6
+psycopg2-binary==2.7.6
 python-dateutil==2.7.5
 pytz==2018.7
 requests==2.20.1
+ruamel.yaml==0.15.77
 six==1.11.0
 SQLAlchemy==1.2.13
 tzlocal==1.5.1

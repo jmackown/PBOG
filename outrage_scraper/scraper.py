@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import psycopg2
+import ruamel.yaml as yaml
 
 
 class Scraper:
@@ -9,6 +10,7 @@ class Scraper:
 
         self.website_data = {}
         self.websites = set(["https://thelincolnite.co.uk/", ])
+        self.angry_words = yaml.load(open('angry_words.yaml').read(), Loader=yaml.Loader)
 
     def update_urls(self):
         print("Updating URLS")
@@ -42,7 +44,10 @@ class Scraper:
 
                 print(f"Inserting {headline} for {site}")
 
-                sql = f"INSERT INTO scraped_data (headline, source, scrape_time) SELECT '{headline}', '{site}', now() " \
+                outrage_rank = self.rank_words(headline)
+
+                sql = f"INSERT INTO scraped_data (headline, source, scrape_time, outrage_rank) " \
+                      f"SELECT '{headline}', '{site}', now(), '{outrage_rank}' " \
                       f"WHERE NOT EXISTS (SELECT 1 FROM scraped_data WHERE headline = '{headline}');"
 
                 try:
@@ -93,3 +98,15 @@ class Scraper:
 
                 for tag in header_tags:
                     self.website_data[site]['headers'].append(tag.string.strip())
+
+    def rank_words(self, headline):
+        score = 0
+        words = headline.split()
+
+        for word in words:
+            if word in self.angry_words:
+                score += 1
+
+        print(f"Ranking {headline} with score '{score}'")
+
+        return score
