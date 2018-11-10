@@ -1,4 +1,6 @@
 from database import db
+from flask_sqlalchemy import SQLAlchemy
+
 
 class URLList(db.Model):
     __tablename__ = 'url_list'
