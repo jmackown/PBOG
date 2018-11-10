@@ -10,7 +10,19 @@ services:
     volumes:
       - ./outrage_db/db_setup:/docker-entrypoint-initdb.d
     networks:
-      - PBOG     
+      - PBOG   
+
+
+  outrage_scraper:
+      build:
+        context: ./outrage_scraper
+        dockerfile: Dockerfile
+      ports:
+        - '66:66'
+      volumes:
+        - ./outrage_scraper:/app/outrage_scraper
+      networks:
+        - PBOG
 
 networks:
   PBOG:
