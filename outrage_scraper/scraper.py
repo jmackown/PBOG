@@ -2,6 +2,10 @@ from bs4 import BeautifulSoup
 import requests
 import psycopg2
 import ruamel.yaml as yaml
+import spacy
+
+
+
 
 
 class Scraper:
@@ -11,6 +15,9 @@ class Scraper:
         self.website_data = {}
         self.websites = set(["https://thelincolnite.co.uk/", ])
         self.angry_words = yaml.load(open('angry_words.yaml').read(), Loader=yaml.Loader)
+
+
+
 
     def update_urls(self):
         print("Updating URLS")
@@ -31,7 +38,7 @@ class Scraper:
         conn.close()
 
     def scrape(self):
-        self.update_urls()
+        # self.update_urls()
         self.get_content_in_sites()
         self.get_header_tags()
 
@@ -46,8 +53,10 @@ class Scraper:
 
                 outrage_rank = self.rank_words(headline)
 
-                sql = f"INSERT INTO scraped_data (headline, source, scrape_time, outrage_rank) " \
-                      f"SELECT '{headline}', '{site}', now(), '{outrage_rank}' " \
+                noun = self.find_noun(headline)
+
+                sql = f"INSERT INTO scraped_data (headline, source, noun, scrape_time, outrage_rank) " \
+                      f"SELECT '{headline}', '{site}', '{noun}', now(), '{outrage_rank}' " \
                       f"WHERE NOT EXISTS (SELECT 1 FROM scraped_data WHERE headline = '{headline}');"
 
                 try:
@@ -110,3 +119,16 @@ class Scraper:
         print(f"Ranking {headline} with score '{score}'")
 
         return score
+
+    def find_noun(self, headline):
+        nlp = spacy.load('en_core_web_sm')
+
+        doc = nlp(f'{headline}')
+
+        for token in doc:
+            if token.pos_ in ('NOUN'):
+                return token
+
+        print(f"Finding nouns in {headline}'")
+
+
