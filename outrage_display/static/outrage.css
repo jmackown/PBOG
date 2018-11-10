@@ -1,41 +1,17 @@
+li {
+	list-style: none;
+}
+
 .headline {
-    color: white;
-    font-size: 7rem;
-    font-family: 'Old Standard TT', serif;
+    position: absolute;
+    top: 0;
+    font-size: xx-large;
+    left: 0;
+    overflow: hidden;
+    font-family: 'Playfair Display', serif;
+	padding: 7px;
 }
 
-.wrapper {
-    height: 100%;
-    width: 100%;
-}
-
-.rank1{
-	background: #006DBF
-}
-.rank2 {
-	background: #00B2BF
-}
-.rank3 {
-	background: #00BF86
-}
-.rank4 {
-	background: #00BF41
-}
-.rank5 {
-	background: #03BF00
-}
-.rank6 {
-	background: #48BF00
-}
-.rank7 {
-	background: #8EBF00
-}
-.rank8 {
-	background: #BFAA00
-}
-.rank9 {
-	background: #BF6500
-}
-.rank10 {
-	background: #BF2000
+.grid-item {
+  margin-bottom: 10px;
 }

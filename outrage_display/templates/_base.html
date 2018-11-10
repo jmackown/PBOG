@@ -1,6 +1,17 @@
 {% block style %}
     <link href="{{ url_for("static", filename="outrage.css") }}" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Old+Standard+TT" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet">
+
+
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+
+
+<script src="{{ url_for("static", filename="outrage.js") }}"></script>
+
 {% endblock %}
 
 

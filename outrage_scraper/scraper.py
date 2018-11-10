@@ -1,15 +1,44 @@
 from bs4 import BeautifulSoup
 import requests
 import psycopg2
+import ruamel.yaml as yaml
+import spacy
+
+
+
 
 
 class Scraper:
 
     def __init__(self):
-        self.websites = ("https://thelincolnite.co.uk/",)
+
         self.website_data = {}
+        self.websites = set(["https://thelincolnite.co.uk/", ])
+        self.angry_words = yaml.load(open('angry_words.yaml').read(), Loader=yaml.Loader)
+
+
+
+
+    def update_urls(self):
+        print("Updating URLS")
+        conn = psycopg2.connect(dbname="outrage", user="postgres", host="outrage_db", port='5432')
+
+        cur = conn.cursor()
+        cur.execute("SELECT url FROM url_lists;")
+
+        for row in cur.fetchall():
+            url = row[0]
+
+            if 'http://' not in url:
+                url = 'http://' + url
+
+            if url and url != '':
+                self.websites.add(url)
+
+        conn.close()
 
     def scrape(self):
+        # self.update_urls()
         self.get_content_in_sites()
         self.get_header_tags()
 
@@ -18,30 +47,52 @@ class Scraper:
 
         for site in self.website_data:
             for headline in self.website_data[site]['headers']:
-                sql = f"INSERT INTO scraped_data (headline, scrape_time) SELECT '{headline}', now() " \
+                headline = headline.replace("'", "''")
+
+                print(f"Inserting {headline} for {site}")
+
+                outrage_rank = self.rank_words(headline)
+
+                noun = self.find_noun(headline)
+
+                sql = f"INSERT INTO scraped_data (headline, source, noun, scrape_time, outrage_rank) " \
+                      f"SELECT '{headline}', '{site}', '{noun}', now(), '{outrage_rank}' " \
                       f"WHERE NOT EXISTS (SELECT 1 FROM scraped_data WHERE headline = '{headline}');"
 
-                cur.execute(sql)
+                try:
+                    cur.execute(sql)
+                except psycopg2.ProgrammingError as e:
+                    print(e)
 
+        print("Commiting!")
         conn.commit()
+
         conn.close()
 
         return self.website_data
 
     def get_content_in_sites(self):
+        print("Getting Content")
 
         for website in self.websites:
 
             self.website_data[website] = {}
 
-            r = requests.get(website)
+            print(f"Getting content for {website}")
+
+            try:
+                r = requests.get(website)
+            except:
+                print(f"FAILED: {website}")
 
             if r.status_code == 200:
                 self.website_data[website]['content'] = r.text
             else:
+                del self.website_data[website]
                 print(f"Failed to access {website}")
 
     def get_header_tags(self):
+        print("Getting Headers")
 
         header_numbers = (1, 2, 3)
 
@@ -56,3 +107,28 @@ class Scraper:
 
                 for tag in header_tags:
                     self.website_data[site]['headers'].append(tag.string.strip())
+
+    def rank_words(self, headline):
+        score = 0
+        words = headline.split()
+
+        for word in words:
+            if word in self.angry_words:
+                score += 1
+
+        print(f"Ranking {headline} with score '{score}'")
+
+        return score
+
+    def find_noun(self, headline):
+        nlp = spacy.load('en_core_web_sm')
+
+        doc = nlp(f'{headline}')
+
+        for token in doc:
+            if token.pos_ in ('NOUN'):
+                return token
+
+        print(f"Finding nouns in {headline}'")
+
+

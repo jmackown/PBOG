@@ -4,19 +4,36 @@
 {% block content %}
 
 
-<div class="wrapper rank{{ headline.outrage_rank }}">
-<div class="headline">
-    {{  headline.headline  }}
+<ul class="grid effect-2">
+    {% for h in headline %}
+    {% set height = image_sizes|random %}
+    {% set width = '200' %}
+    <li class="grid-item" >
+        </div>
+<div style='opacity: 0.5; background-image: url("https://source.unsplash.com/200x{{ height }}/?{{ h.noun }}"); width: {{ width }}px; height: {{ height }}px'>
 </div>
 
+    <div class="headline resize" style="width: {{ width }}px; height: {{ height }}px; ">
 
 
+                {{  h.headline  }}
+            </div>
 
-<div class="source">
-    Newspaper Name
-</div>
+    </li>
+    {% endfor %}
+
+</ul>
 
 
-</div>
+<script>
+    $('.grid').masonry({
+  // options
+  itemSelector: '.grid-item',
+  columnWidth: 200,
+        gutter: 10
+});
+</script>
 
 {% endblock %}
+
+

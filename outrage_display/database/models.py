@@ -18,8 +18,10 @@ class ScrapedData(db.Model):
     __tablename__ = 'scraped_data'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    source = db.Column(db.Text)
     headline = db.Column(db.Text)
-    scrape_time = db.Column(db.Date, default=datetime.now())
+    noun = db.Column(db.Text)
+    scrape_time = db.Column(db.TIMESTAMP, default=datetime.now())
     outrage_rank = db.Column(db.Integer)
 
     def __repr__(self):
