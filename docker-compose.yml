@@ -40,7 +40,7 @@ services:
         context: ./outrage_display
         dockerfile: Dockerfile
       ports:
-        - '11:11'
+        - '5000:5000'
       volumes:
         - ./outrage_display:/app/outrage_display
       networks:
