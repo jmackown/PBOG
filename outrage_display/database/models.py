@@ -1,9 +1,10 @@
 from database import db
+from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 
 
 class URLList(db.Model):
-    __tablename__ = 'url_list'
+    __tablename__ = 'url_lists'
 
     url_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     url = db.Column(db.Text)

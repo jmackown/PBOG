@@ -1,9 +1,8 @@
 from database import db
 from flask import Blueprint
-from flask import current_app as app
+from database.models import URLList, ScrapedData
 
 ragnarok_bp = Blueprint('ragnarok', __name__)
-
 
 
 @ragnarok_bp.route('/ragnarok/', methods=['GET'])
