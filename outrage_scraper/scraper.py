@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
+import psycopg2
 
 
 class Scraper:
@@ -12,7 +13,18 @@ class Scraper:
         self.get_content_in_sites()
         self.get_header_tags()
 
-        print("Scraping!")
+        conn = psycopg2.connect(dbname="outrage", user="postgres", host="outrage_db", port='5432')
+        cur = conn.cursor()
+
+        for site in self.website_data:
+            for headline in self.website_data[site]['headers']:
+                sql = f"INSERT INTO scraped_data (headline, scrape_time) SELECT '{headline}', now() " \
+                      f"WHERE NOT EXISTS (SELECT 1 FROM scraped_data WHERE headline = '{headline}');"
+
+                cur.execute(sql)
+
+        conn.commit()
+        conn.close()
 
         return self.website_data
 

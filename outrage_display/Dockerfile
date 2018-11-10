@@ -8,5 +8,6 @@ RUN pip install -r requirements.txt
 
 ENV PYTHONPATH=$PYTHONPATH:outrage_display/
 
+ENV FLASK_ENV='development'
 # run the application
 CMD ["python", "app.py"]
