@@ -6,47 +6,44 @@ class Scraper:
 
     def __init__(self):
         self.websites = ("https://thelincolnite.co.uk/",)
-        self.content = {}
+        self.website_data = {}
 
         self.get_content_in_sites()
-
         self.get_header_tags()
+
+        for h in self.website_data["https://thelincolnite.co.uk/"]['headers']:
+            print(h)
+
 
     def get_content_in_sites(self):
 
         for website in self.websites:
 
+            self.website_data[website] = {}
+
             r = requests.get(website)
 
             if r.status_code == 200:
-                # print(r.content)
-                self.content[website] = r.content
-                # print(self.content[website])
-
+                self.website_data[website]['content'] = r.text
             else:
                 print(f"Failed to access {website}")
 
     def get_header_tags(self):
 
+        header_numbers = (1, 2, 3)
 
-        with open('test.txt', 'wb') as file:
-            file.write(self.content['https://thelincolnite.co.uk/'])
-            file.close()
+        for site in self.website_data:
 
-        print(len(self.content))
+            self.website_data[site]['headers'] = []
 
-        for site in self.content:
+            soup = BeautifulSoup(self.website_data[site]['content'], "html.parser")
 
-            for content in self.content[site]:
-                pass
-                # print(content)
+            for i in header_numbers:
+                header_tags = list(soup.find_all(f'h{i}'))
 
-                # soup = BeautifulSoup(content, "html.parser")
+                for tag in header_tags:
 
-                # for i in tag_numbers:
-                #     print(soup.find(f'h{i}'))
-
-
+                    self.website_data[site]['headers'].append(tag)
 
 
 scraper = Scraper()
