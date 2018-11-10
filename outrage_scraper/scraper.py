@@ -42,7 +42,7 @@ class Scraper:
 
                 print(f"Inserting {headline} for {site}")
 
-                sql = f"INSERT INTO scraped_data (headline, scrape_time) SELECT '{headline}', now() " \
+                sql = f"INSERT INTO scraped_data (headline, source, scrape_time) SELECT '{headline}', '{site}', now() " \
                       f"WHERE NOT EXISTS (SELECT 1 FROM scraped_data WHERE headline = '{headline}');"
 
                 try:
