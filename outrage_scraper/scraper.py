@@ -4,7 +4,7 @@ import psycopg2
 import ruamel.yaml as yaml
 import spacy
 
-
+nlp = spacy.load('en_core_web_sm')
 
 
 
@@ -38,7 +38,7 @@ class Scraper:
         conn.close()
 
     def scrape(self):
-        # self.update_urls()
+        self.update_urls()
         self.get_content_in_sites()
         self.get_header_tags()
 
@@ -121,7 +121,7 @@ class Scraper:
         return score
 
     def find_noun(self, headline):
-        nlp = spacy.load('en_core_web_sm')
+
 
         doc = nlp(f'{headline}')
 
