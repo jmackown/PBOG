@@ -4,7 +4,7 @@ services:
   outrage_db:
     image: 'postgres:9.6.3'
     environment:
-      - POSTGRES_USER=outrage
+      - POSTGRES_USER=postgres
     ports:
       - '55:5432'
     volumes:
