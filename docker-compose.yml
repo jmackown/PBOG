@@ -24,6 +24,28 @@ services:
       networks:
         - PBOG
 
+  outrage_analysis:
+      build:
+        context: ./outrage_analysis
+        dockerfile: Dockerfile
+      ports:
+        - '77:77'
+      volumes:
+        - ./outrage_analysis:/app/outrage_analysis
+      networks:
+        - PBOG        
+
+  outrage_display:
+      build:
+        context: ./outrage_display
+        dockerfile: Dockerfile
+      ports:
+        - '11:11'
+      volumes:
+        - ./outrage_display:/app/outrage_display
+      networks:
+        - PBOG        
+
 networks:
   PBOG:
 
