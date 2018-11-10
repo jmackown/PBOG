@@ -14,7 +14,6 @@ class Scraper:
         for h in self.website_data["https://thelincolnite.co.uk/"]['headers']:
             print(h)
 
-
     def get_content_in_sites(self):
 
         for website in self.websites:
@@ -39,11 +38,10 @@ class Scraper:
             soup = BeautifulSoup(self.website_data[site]['content'], "html.parser")
 
             for i in header_numbers:
-                header_tags = list(soup.find_all(f'h{i}'))
+                header_tags = list(soup.find_all(f'h{i}', text=True))
 
                 for tag in header_tags:
-
-                    self.website_data[site]['headers'].append(tag)
+                    self.website_data[site]['headers'].append(tag.string.strip())
 
 
 scraper = Scraper()
