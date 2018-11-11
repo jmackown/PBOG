@@ -38,7 +38,7 @@ class Scraper:
         conn.close()
 
     def scrape(self):
-        self.update_urls()
+        # self.update_urls()
         self.get_content_in_sites()
         self.get_header_tags()
 

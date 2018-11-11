@@ -8,9 +8,14 @@ li {
     font-size: xx-large;
     left: 0;
     overflow: hidden;
-    font-family: 'Playfair Display', serif;
+    /*font-family: 'Playfair Display', serif;*/
+    font-family: 'Roboto Slab', serif;
+
 	padding: 7px;
     text-align: center;
+    color: black;
+    font-weight: bold;
+    filter: drop-shadow(0 0 1rem white);
 }
 
 .grid-item {
@@ -20,7 +25,7 @@ li {
 .bg_image {
     border: 3px solid lightgrey;
     border-radius: 10px;
-    opacity: 0.5;
+    opacity: 0.4;
 }
 
 .header {

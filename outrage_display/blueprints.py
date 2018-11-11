@@ -13,3 +13,12 @@ main_bp = Blueprint('index', __name__)
 def index():
     headline = ScrapedData.query.filter(ScrapedData.outrage_rank > 1).all()
     return render_template('index.html', headline = headline)
+
+
+pres_bp = Blueprint('pres', __name__)
+
+
+@pres_bp.route('/presentation', methods=['GET'])
+def pres():
+
+    return render_template('presentation.html')

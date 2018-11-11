@@ -1,7 +1,7 @@
 from flask import Blueprint, Flask
 from database import db
 from create_db import ragnarok_bp
-from blueprints import main_bp
+from blueprints import main_bp, pres_bp
 
 def create_app():
 
@@ -12,6 +12,7 @@ def create_app():
 
     app.register_blueprint(ragnarok_bp)
     app.register_blueprint(main_bp)
+    app.register_blueprint(pres_bp)
 
     db.init_app(app)
 

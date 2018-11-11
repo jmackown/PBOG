@@ -10,18 +10,26 @@
     <!--{% set height = image_sizes|random %}-->
     {% set width = '400' %}
     {% set height = ((h.headline|length/20)|round(0)|int)*100 %}
+    {% if h.outrage_rank > 5 %}
+        {% set filter = 'linear-gradient(rgba(255, 0, 0, 0.45), rgba(0, 0, 0, 0.45))' %}
+    {% elif 5 > h.outrage_rank >= 4 %}
+        {% set filter = 'linear-gradient(rgba(255, 128, 0, 0.45), rgba(0, 0, 0, 0.45))' %}
+    {% elif 4 > h.outrage_rank  >= 3 %}
+        {% set filter = 'linear-gradient(rgba(255, 255, 0, 0.45), rgba(0, 0, 0, 0.45))' %}
+    {% elif  3 > h.outrage_rank  >= 2 %}
+        {% set filter = 'linear-gradient(rgba(128, 255, 0, 0.45), rgba(0, 0, 0, 0.45))' %}
+    {% endif%}
 
 
     <li class="grid-item" >
         </div>
-<div class="bg_image" style='background: url("https://source.unsplash.com/{{ width }}x{{ height }}/?{{ h.noun }}"); width: {{ width }}px; height: {{ height }}px'>
+<div class="bg_image outrage" style='background: {{ filter }},url("https://source.unsplash.com/{{ width }}x{{ height }}/?{{ h.noun }}"); width: {{ width }}px; height: {{ height }}px'>
 </div>
 
     <div class="headline resize" style="width: {{ width }}px; height: {{ height }}px; ">
 
 
                 {{  h.headline  }}
-        {{ len }}
             </div>
 
     </li>

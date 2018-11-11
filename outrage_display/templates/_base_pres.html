@@ -1,8 +1,8 @@
 {% block style %}
     <link href="{{ url_for("static", filename="outrage.css") }}" rel="stylesheet" />
+    <link href="{{ url_for("static", filename="webslides.css") }}" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
 
 
 <script
@@ -15,7 +15,7 @@
 <script src="{{ url_for("static", filename="outrage.js") }}"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FitText.js/1.2.0/jquery.fittext.js"></script>
-
+<script src="{{ url_for("static", filename="webslides.min.js") }}"></script>
 
 {% endblock %}
 
