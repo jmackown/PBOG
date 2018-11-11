@@ -11,7 +11,7 @@ main_bp = Blueprint('index', __name__)
 
 @main_bp.route('/', methods=['GET'])
 def index():
-    headline = ScrapedData.query.filter(ScrapedData.outrage_rank > 1).all()
+    headline = ScrapedData.query.filter(ScrapedData.outrage_rank > 1).order_by(ScrapedData.scrape_time, ScrapedData.outrage_rank).all()
     return render_template('index.html', headline = headline)
 
 

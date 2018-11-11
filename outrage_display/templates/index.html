@@ -11,13 +11,13 @@
         <!--{% set height = image_sizes|random %}-->
         {% set width = '400' %}
         {% set height = ((h.headline|length/20)|round(0)|int)*100 %}
-        {% if h.outrage_rank > 5 %}
+        {% if h.outrage_rank > 3 %}
             {% set filter = 'linear-gradient(rgba(255, 0, 0, 0.25), rgba(0, 0, 0, 0.25))' %}
-        {% elif 5 > h.outrage_rank >= 4 %}
+        {% elif 3 > h.outrage_rank >= 2 %}
             {% set filter = 'linear-gradient(rgba(255, 128, 0, 0.25), rgba(0, 0, 0, 0.25))' %}
-        {% elif 4 > h.outrage_rank  >= 3 %}
+        {% elif 2 > h.outrage_rank  >= 1 %}
             {% set filter = 'linear-gradient(rgba(255, 255, 0, 0.25), rgba(0, 0, 0, 0.25))' %}
-        {% elif  3 > h.outrage_rank  >= 2 %}
+        {% elif  1 > h.outrage_rank  >= 0 %}
             {% set filter = 'linear-gradient(rgba(128, 255, 0, 0.25), rgba(0, 0, 0, 0.25))' %}
         {% endif%}
 
