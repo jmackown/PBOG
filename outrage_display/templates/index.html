@@ -9,12 +9,12 @@
     {% for h in headline %}
     <!--{% set height = image_sizes|random %}-->
     {% set width = '400' %}
-    {% set height = range(2, 8) | random*100 %}
-    {% set len = (h.headline|length/2)|round|int %}
+    {% set height = ((h.headline|length/20)|round(0)|int)*100 %}
+
 
     <li class="grid-item" >
         </div>
-<div class="bg_image" style='background-image: url("https://source.unsplash.com/{{ width }}x{{ height }}/?{{ h.noun }}"); width: {{ width }}px; height: {{ height }}px'>
+<div class="bg_image" style='background: url("https://source.unsplash.com/{{ width }}x{{ height }}/?{{ h.noun }}"); width: {{ width }}px; height: {{ height }}px'>
 </div>
 
     <div class="headline resize" style="width: {{ width }}px; height: {{ height }}px; ">
