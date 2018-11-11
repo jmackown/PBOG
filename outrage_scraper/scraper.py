@@ -15,6 +15,8 @@ class Scraper:
         self.website_data = {}
         self.websites = set(["https://thelincolnite.co.uk/", ])
         self.angry_words = yaml.load(open('angry_words.yaml').read(), Loader=yaml.Loader)
+        self.animals = yaml.load(open('animals.yaml').read(), Loader=yaml.Loader)
+        self.ignore = yaml.load(open('ignore.yaml').read(), Loader=yaml.Loader)
 
 
 
@@ -38,7 +40,7 @@ class Scraper:
         conn.close()
 
     def scrape(self):
-        # self.update_urls()
+        self.update_urls()
         self.get_content_in_sites()
         self.get_header_tags()
 
@@ -115,6 +117,14 @@ class Scraper:
         for word in words:
             if word in self.angry_words:
                 score += 1
+
+        for word in words:
+            if word in self.animals:
+                score += 2
+
+        for word in words:
+            if word in self.ignore:
+                score = 0
 
         print(f"Ranking {headline} with score '{score}'")
 
