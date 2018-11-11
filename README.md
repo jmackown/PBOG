@@ -1,6 +1,24 @@
 # PBOG
 Post-Brexit Outrage Generator
 
+## Concept
+
+For years, Britain has been toiling under the spectre of Brexit.
+It's the night before The Deadline when the 'government' decide it's all a huge mistake, and cancel the whole thing.
+
+Suddenly The British Public are free!
+But what will we complain about now...??
+Who can we blame when terrible things happen?
+
+*Introducing the Post-Brexit Outrage Generator!*
+
+## What does it do?
+
+It scrapes 300+ local news sites and grabs their front page headlines. These headlines are then analysed using our own proprietary ScholarHack Outrage Algorithm, and ranked. 
+
+
+The results are then displayed on a page, ranked by most outrageous first. They are colour co-ordinated based on rank, and are accompanied by 'relevant' images (NLP is not 100% foolproof...).
+
 
 ## To Run:
 1. Clone the repo
