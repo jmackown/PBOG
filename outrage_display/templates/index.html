@@ -1,0 +1,46 @@
+{% extends "_base.html" %}
+
+
+{% block content %}
+
+
+
+<ul class="grid effect-2">
+    {% for h in headline %}
+    <!--{% set height = image_sizes|random %}-->
+    {% set width = '400' %}
+    {% set height = range(2, 8) | random*100 %}
+    {% set len = (h.headline|length/2)|round|int %}
+
+    <li class="grid-item" >
+        </div>
+<div class="bg_image" style='background-image: url("https://source.unsplash.com/{{ width }}x{{ height }}/?{{ h.noun }}"); width: {{ width }}px; height: {{ height }}px'>
+</div>
+
+    <div class="headline resize" style="width: {{ width }}px; height: {{ height }}px; ">
+
+
+                {{  h.headline  }}
+        {{ len }}
+            </div>
+
+    </li>
+    {% endfor %}
+
+</ul>
+
+
+<script>
+    $('.grid').masonry({
+  // options
+  itemSelector: '.grid-item',
+  columnWidth: 400,
+        gutter: 10
+});
+
+    $('.resize').fitText()
+</script>
+
+{% endblock %}
+
+
