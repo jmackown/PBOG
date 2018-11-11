@@ -20,6 +20,9 @@ class Scraper:
 
 
 
+        self.happy_words = yaml.load(open('happy_words.yaml').read(), Loader=yaml.Loader)
+        self.animal_words = yaml.load(open('animals.yaml').read(), Loader=yaml.Loader)
+        self.outrage_words = yaml.load(open('outrage_words.yaml').read(), Loader=yaml.Loader)
 
     def update_urls(self):
         print("Updating URLS")
@@ -82,12 +85,14 @@ class Scraper:
 
             print(f"Getting content for {website}")
 
+            r = None
+
             try:
                 r = requests.get(website)
             except:
                 print(f"FAILED: {website}")
 
-            if r.status_code == 200:
+            if r and r.status_code == 200:
                 self.website_data[website]['content'] = r.text
             else:
                 del self.website_data[website]
@@ -117,6 +122,12 @@ class Scraper:
         for word in words:
             if word in self.angry_words:
                 score += 1
+            if word in self.happy_words:
+                score -= 1
+            if word in self.animal_words:
+                score += 1
+            if word in self.outrage_words:
+                score += 2
 
         for word in words:
             if word in self.animals:
