@@ -22,7 +22,8 @@ class ScrapedData(db.Model):
     headline = db.Column(db.Text)
     noun = db.Column(db.Text)
     scrape_time = db.Column(db.TIMESTAMP, default=datetime.now())
-    outrage_rank = db.Column(db.Integer)
+    raw_score = db.Column(db.Float)
+    outrage_rank = db.Column(db.Float)
 
     def __repr__(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}

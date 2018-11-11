@@ -1,10 +1,7 @@
 from bs4 import BeautifulSoup
+from analyser import Outragify
 import requests
 import psycopg2
-import ruamel.yaml as yaml
-import spacy
-
-nlp = spacy.load('en_core_web_sm')
 
 
 
@@ -13,11 +10,8 @@ class Scraper:
     def __init__(self):
 
         self.website_data = {}
-        self.websites = set(["https://thelincolnite.co.uk/", ])
-        self.angry_words = yaml.load(open('angry_words.yaml').read(), Loader=yaml.Loader)
-
-
-
+        self.websites = set(["https://thelincolnite.co.uk/"])
+        self.outragify = Outragify()
 
     def update_urls(self):
         print("Updating URLS")
@@ -51,12 +45,12 @@ class Scraper:
 
                 print(f"Inserting {headline} for {site}")
 
-                outrage_rank = self.rank_words(headline)
+                raw_score, outrage_rank = self.outragify.rank_words(headline)
 
-                noun = self.find_noun(headline)
+                noun = self.outragify.find_noun(headline)
 
-                sql = f"INSERT INTO scraped_data (headline, source, noun, scrape_time, outrage_rank) " \
-                      f"SELECT '{headline}', '{site}', '{noun}', now(), '{outrage_rank}' " \
+                sql = f"INSERT INTO scraped_data (headline, source, noun, scrape_time, raw_score, outrage_rank) " \
+                      f"SELECT '{headline}', '{site}', '{noun}', now(), {raw_score}, {outrage_rank} " \
                       f"WHERE NOT EXISTS (SELECT 1 FROM scraped_data WHERE headline = '{headline}');"
 
                 try:
@@ -80,12 +74,14 @@ class Scraper:
 
             print(f"Getting content for {website}")
 
+            r = None
+
             try:
                 r = requests.get(website)
             except:
                 print(f"FAILED: {website}")
 
-            if r.status_code == 200:
+            if r and r.status_code == 200:
                 self.website_data[website]['content'] = r.text
             else:
                 del self.website_data[website]
@@ -107,28 +103,3 @@ class Scraper:
 
                 for tag in header_tags:
                     self.website_data[site]['headers'].append(tag.string.strip())
-
-    def rank_words(self, headline):
-        score = 0
-        words = headline.split()
-
-        for word in words:
-            if word in self.angry_words:
-                score += 1
-
-        print(f"Ranking {headline} with score '{score}'")
-
-        return score
-
-    def find_noun(self, headline):
-
-
-        doc = nlp(f'{headline}')
-
-        for token in doc:
-            if token.pos_ in ('NOUN'):
-                return token
-
-        print(f"Finding nouns in {headline}'")
-
-
