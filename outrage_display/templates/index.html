@@ -2,48 +2,51 @@
 
 
 {% block content %}
+<div class="header">Post-Brexit Outrage Generator</div>
+
+<div class="outrage_container">
+
+    <ul class="grid effect-2">
+        {% for h in headline %}
+        <!--{% set height = image_sizes|random %}-->
+        {% set width = '400' %}
+        {% set height = ((h.headline|length/20)|round(0)|int)*100 %}
+        {% if h.outrage_rank > 5 %}
+            {% set filter = 'linear-gradient(rgba(255, 0, 0, 0.25), rgba(0, 0, 0, 0.25))' %}
+        {% elif 5 > h.outrage_rank >= 4 %}
+            {% set filter = 'linear-gradient(rgba(255, 128, 0, 0.25), rgba(0, 0, 0, 0.25))' %}
+        {% elif 4 > h.outrage_rank  >= 3 %}
+            {% set filter = 'linear-gradient(rgba(255, 255, 0, 0.25), rgba(0, 0, 0, 0.25))' %}
+        {% elif  3 > h.outrage_rank  >= 2 %}
+            {% set filter = 'linear-gradient(rgba(128, 255, 0, 0.25), rgba(0, 0, 0, 0.25))' %}
+        {% endif%}
 
 
+        <li class="grid-item" >
 
-<ul class="grid effect-2">
-    {% for h in headline %}
-    <!--{% set height = image_sizes|random %}-->
-    {% set width = '400' %}
-    {% set height = ((h.headline|length/20)|round(0)|int)*100 %}
-    {% if h.outrage_rank > 5 %}
-        {% set filter = 'linear-gradient(rgba(255, 0, 0, 0.45), rgba(0, 0, 0, 0.45))' %}
-    {% elif 5 > h.outrage_rank >= 4 %}
-        {% set filter = 'linear-gradient(rgba(255, 128, 0, 0.45), rgba(0, 0, 0, 0.45))' %}
-    {% elif 4 > h.outrage_rank  >= 3 %}
-        {% set filter = 'linear-gradient(rgba(255, 255, 0, 0.45), rgba(0, 0, 0, 0.45))' %}
-    {% elif  3 > h.outrage_rank  >= 2 %}
-        {% set filter = 'linear-gradient(rgba(128, 255, 0, 0.45), rgba(0, 0, 0, 0.45))' %}
-    {% endif%}
+    <div class="bg_image outrage" style='background: {{ filter }},url("https://source.unsplash.com/{{ width }}x{{ height }}/?{{ h.noun }}"); width: {{ width }}px; height: {{ height }}px'>
+    </div>
+
+        <div class="headline resize" style="width: {{ width }}px; height: {{ height }}px; ">
 
 
-    <li class="grid-item" >
-        </div>
-<div class="bg_image outrage" style='background: {{ filter }},url("https://source.unsplash.com/{{ width }}x{{ height }}/?{{ h.noun }}"); width: {{ width }}px; height: {{ height }}px'>
+                    {{  h.headline  }}
+                </div>
+
+        </li>
+        {% endfor %}
+
+    </ul>
+
 </div>
-
-    <div class="headline resize" style="width: {{ width }}px; height: {{ height }}px; ">
-
-
-                {{  h.headline  }}
-            </div>
-
-    </li>
-    {% endfor %}
-
-</ul>
-
 
 <script>
     $('.grid').masonry({
   // options
   itemSelector: '.grid-item',
   columnWidth: 400,
-        gutter: 10
+        gutter: 10,
+        fitWidth: true
 });
 
     $('.resize').fitText()
