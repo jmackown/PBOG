@@ -9,9 +9,20 @@ li {
     left: 0;
     overflow: hidden;
     font-family: 'Playfair Display', serif;
-	padding: 7px;
+	padding-top: 7px;
+    text-align: center;
 }
 
 .grid-item {
   margin-bottom: 10px;
+}
+
+.bg_image {
+    border: 3px solid lightgrey;
+    border-radius: 10px;
+    opacity: 0.5;
+}
+
+.header {
+    font-family: 'Permanent Marker', cursive;
 }
