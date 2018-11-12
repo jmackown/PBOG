@@ -9,7 +9,7 @@ app = Flask(__name__)
 scraper = Scraper()
 
 scheduler = BackgroundScheduler()
-scheduler.add_job(func=scraper.scrape, trigger="interval", seconds=5)
+scheduler.add_job(func=scraper.scrape, trigger="interval", seconds=43200)
 scheduler.start()
 
 atexit.register(lambda: scheduler.shutdown())

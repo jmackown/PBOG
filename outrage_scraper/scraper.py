@@ -50,6 +50,14 @@ class Scraper:
         conn = psycopg2.connect(dbname="outrage", user="postgres", host="outrage_db", port='5432')
         cur = conn.cursor()
 
+
+        try:
+            print(f"Removing old headlines")
+            remove_old = "DELETE FROM scraped_data where scrape_time <= (current_date);"
+            cur.execute(remove_old)
+        except:
+            print(f"failed removing old headlines")
+
         for site in self.website_data:
             for headline in self.website_data[site]['headers']:
                 headline = headline.replace("'", "''")
