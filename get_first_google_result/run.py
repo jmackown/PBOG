@@ -332,7 +332,7 @@ for site in searchterms:
 
     text = urllib.parse.quote_plus(site)
 
-    url = 'https://www.google.co.uk/search?q=' + text
+    url = f'https://www.google.co.uk/search?q={text}'
 
     response = requests.get(url)
 
