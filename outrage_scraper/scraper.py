@@ -35,7 +35,7 @@ class Scraper:
             url = row[0]
 
             if 'http://' not in url:
-                url = 'http://' + url
+                url = f'http://{url}'
 
             if url and url != '':
                 self.websites.add(url)
@@ -52,11 +52,11 @@ class Scraper:
 
 
         try:
-            print(f"Removing old headlines")
+            print("Removing old headlines")
             remove_old = "DELETE FROM scraped_data where scrape_time <= (current_date);"
             cur.execute(remove_old)
         except:
-            print(f"failed removing old headlines")
+            print("failed removing old headlines")
 
         for site in self.website_data:
             for headline in self.website_data[site]['headers']:

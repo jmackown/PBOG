@@ -13,5 +13,5 @@ DEV_SERVER_PORT = 5000
 
 
 SQLALCHEMY_TRACK_MODIFICATIONS = False
-SQLALCHEMY_DATABASE_URI = f"postgresql://postgres@outrage_db:5432/outrage"
+SQLALCHEMY_DATABASE_URI = "postgresql://postgres@outrage_db:5432/outrage"
 SQLALCHEMY_ECHO = True
